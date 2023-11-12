@@ -61,16 +61,24 @@ res.json(notes);
 // DELETE
 
 app.delete('/api/notes/:id', (req, res) => {
-  fs.readFile('/db/db.json', 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }})  
+  const id = req.params.id;
+  // reading the json file
+  const data = JSON.parse(fs.readFileSync('./db/db.json'));
 
+  const index = data.findIndex(item => item.id === id);
 
-});
-
-
+  if (index !== -1) {
+    data.splice(index, 1);
+    fs.writeFileSync('./db/db.json', JSON.stringify(data));
+      
+    // success 
+    res.json({ message: 'Data deleted successfully'});
+    }
+    else {
+    // error
+    res.status(404).json({ error: 'Data not found'})
+    };
+})
 
 
 app.listen(PORT, (req,res) => {
