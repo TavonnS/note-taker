@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = 3000;
+const port = process.env.PORT || 3000;
 const path = require('path');
 app.use(express.json());
 
@@ -81,6 +81,6 @@ app.delete('/api/notes/:id', (req, res) => {
 })
 
 
-app.listen(PORT, (req,res) => {
-    console.log(`Server is now listening on port http://localhost:${PORT}`);
+app.listen(port, (req,res) => {
+    console.log(`Server is now listening on port http://localhost:${port}`);
 });
